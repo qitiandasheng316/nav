@@ -1,0 +1,1010 @@
+{
+  "exam": {
+    "name": "考试报名",
+    "children": [
+      {
+        "key": "primary",
+        "name": "高中"
+      },
+      {
+        "key": "middle",
+        "name": "大学"
+      },
+      {
+        "key": "university",
+        "name": "研究生"
+      },
+      {
+        "key": "postgrad",
+        "name": "体制内"
+      },
+      {
+        "key": "system",
+        "name": "提升"
+      },
+      {
+        "key": "skill",
+        "name": "技能"
+      },
+      {
+        "key": "language",
+        "name": "语言学习"
+      },
+      {
+        "key": "cert",
+        "name": "资格考证"
+      },
+      {
+        "key": "kaoyantiku",
+        "name": "考研题库"
+      },
+      {
+        "key": "learnall",
+        "name": "综合学习"
+      }
+    ],
+    "links": [
+      {
+        "sub": "primary",
+        "title": "国家中小学智慧教育平台",
+        "url": "https://basic.smartedu.cn/"
+      },
+      {
+        "sub": "primary",
+        "title": "101教育PPT",
+        "url": "https://www.101ppt.com/"
+      },
+      {
+        "sub": "primary",
+        "title": "作业帮",
+        "url": "https://www.zuoyebang.com/"
+      },
+      {
+        "sub": "primary",
+        "title": "学堂在线中小学",
+        "url": "https://www.xuetangx.com/"
+      },
+      {
+        "sub": "middle",
+        "title": "国家中小学智慧教育平台",
+        "url": "https://basic.smartedu.cn/"
+      },
+      {
+        "sub": "middle",
+        "title": "中考网",
+        "url": "https://zhongkao.eol.cn/"
+      },
+      {
+        "sub": "middle",
+        "title": "学科网",
+        "url": "https://www.zxxk.com/"
+      },
+      {
+        "sub": "middle",
+        "title": "51试题网",
+        "url": "https://www.51test.net/"
+      },
+      {
+        "sub": "university",
+        "title": "四六级报名网",
+        "url": "https://cet-bm.neea.edu.cn/"
+      },
+      {
+        "sub": "university",
+        "title": "教资考试网",
+        "url": "https://ntce.neea.edu.cn/"
+      },
+      {
+        "sub": "university",
+        "title": "学信网",
+        "url": "https://www.chsi.com.cn/"
+      },
+      {
+        "sub": "university",
+        "title": "计算机等级考试",
+        "url": "https://ncre.neea.edu.cn/"
+      },
+      {
+        "sub": "postgrad",
+        "title": "研招网",
+        "url": "https://yz.chsi.com.cn/"
+      },
+      {
+        "sub": "postgrad",
+        "title": "考研网",
+        "url": "https://kaoyan.eol.cn/"
+      },
+      {
+        "sub": "postgrad",
+        "title": "中国教育考试网",
+        "url": "https://www.neea.edu.cn/"
+      },
+      {
+        "sub": "system",
+        "title": "中国人事考试网",
+        "url": "https://www.cpta.com.cn/"
+      },
+      {
+        "sub": "system",
+        "title": "公考雷达",
+        "url": "https://www.gongkaoleida.com/"
+      },
+      {
+        "sub": "system",
+        "title": "粉笔公考",
+        "url": "https://www.fenbi.com/"
+      },
+      {
+        "sub": "system",
+        "title": "国聘网",
+        "url": "https://www.iguopin.com/"
+      },
+      {
+        "sub": "skill",
+        "title": "慕课网",
+        "url": "https://www.imooc.com/"
+      },
+      {
+        "sub": "skill",
+        "title": "中国大学MOOC",
+        "url": "https://www.icourse163.org/"
+      },
+      {
+        "sub": "skill",
+        "title": "Oeasy免费教程",
+        "url": "https://www.oeasy.org/"
+      },
+      {
+        "sub": "skill",
+        "title": "我要自学网",
+        "url": "https://www.51zxw.net/"
+      },
+      {
+        "sub": "language",
+        "title": "有道词典",
+        "url": "https://dict.youdao.com/"
+      },
+      {
+        "sub": "language",
+        "title": "必应翻译",
+        "url": "https://www.bing.com/translator"
+      },
+      {
+        "sub": "language",
+        "title": "VOA英语",
+        "url": "https://www.51voa.com/"
+      },
+      {
+        "sub": "cert",
+        "title": "考试酷",
+        "url": "https://www.examcoo.com/"
+      },
+      {
+        "sub": "cert",
+        "title": "233网校",
+        "url": "https://www.233.com/"
+      },
+      {
+        "sub": "kaoyantiku",
+        "title": "考研网",
+        "url": "https://www.kaoyan.com/"
+      },
+      {
+        "sub": "kaoyantiku",
+        "title": "智学网",
+        "url": "https://www.zhixue.com/"
+      },
+      {
+        "sub": "learnall",
+        "title": "共产党员网学习平台",
+        "url": "https://www.open.12371.cn/"
+      },
+      {
+        "sub": "learnall",
+        "title": "学堂在线",
+        "url": "https://www.xuetangx.com/"
+      }
+    ]
+  },
+  "hot": {
+    "name": "最近热点",
+    "children": [
+      {
+        "key": "hot1",
+        "name": "共享文档合集"
+      },
+      {
+        "key": "hot2",
+        "name": "植物大战僵尸杂交版"
+      },
+      {
+        "key": "hot3",
+        "name": "拼豆素材"
+      },
+      {
+        "key": "hot4",
+        "name": "体育赛况"
+      },
+      {
+        "key": "hot5",
+        "name": "文娱热点"
+      },
+      {
+        "key": "hot6",
+        "name": "汽车快讯"
+      },
+      {
+        "key": "hot7",
+        "name": "房产资讯"
+      },
+      {
+        "key": "hot8",
+        "name": "医疗健康"
+      },
+      {
+        "key": "hot9",
+        "name": "国际新闻"
+      },
+      {
+        "key": "hot10",
+        "name": "民生信息"
+      }
+    ],
+    "links": [
+      {
+        "sub": "hot1",
+        "title": "共享文档三",
+        "url": "https://tophub.today/"
+      },
+      {
+        "sub": "hot2",
+        "title": "下载链接",
+        "url": "https://www.cls.cn/"
+      },
+      {
+        "sub": "hot2",
+        "title": "东方财富",
+        "url": "https://www.eastmoney.com/"
+      },
+      {
+        "sub": "hot3",
+        "title": "IT之家",
+        "url": "https://www.ithome.com/"
+      },
+      {
+        "sub": "hot3",
+        "title": "36氪",
+        "url": "https://www.36kr.com/"
+      },
+      {
+        "sub": "hot4",
+        "title": "新浪体育",
+        "url": "https://sports.sina.com.cn/"
+      },
+      {
+        "sub": "hot4",
+        "title": "懂球帝",
+        "url": "https://www.dongqiudi.com/"
+      },
+      {
+        "sub": "hot5",
+        "title": "豆瓣电影",
+        "url": "https://movie.douban.com/"
+      },
+      {
+        "sub": "hot5",
+        "title": "B站资讯",
+        "url": "https://www.bilibili.com/news"
+      },
+      {
+        "sub": "hot6",
+        "title": "汽车之家",
+        "url": "https://www.autohome.com.cn/"
+      },
+      {
+        "sub": "hot6",
+        "title": "易车网",
+        "url": "https://www.yiche.com/"
+      },
+      {
+        "sub": "hot7",
+        "title": "贝壳找房",
+        "url": "https://ke.com/"
+      },
+      {
+        "sub": "hot7",
+        "title": "安居客",
+        "url": "https://www.anjuke.com/"
+      },
+      {
+        "sub": "hot8",
+        "title": "丁香医生",
+        "url": "https://dxy.com/"
+      },
+      {
+        "sub": "hot8",
+        "title": "健康中国",
+        "url": "https://www.healthchina.gov.cn/"
+      },
+      {
+        "sub": "hot9",
+        "title": "环球网",
+        "url": "https://www.huanqiu.com/"
+      },
+      {
+        "sub": "hot9",
+        "title": "澎湃国际",
+        "url": "https://www.thepaper.cn/"
+      },
+      {
+        "sub": "hot10",
+        "title": "中国天气网",
+        "url": "https://www.weather.com.cn/"
+      },
+      {
+        "sub": "hot10",
+        "title": "本地政务通知",
+        "url": "https://www.gov.cn/"
+      }
+    ]
+  },
+  "game": {
+    "name": "游戏",
+    "children": [
+      {
+        "key": "pcgame",
+        "name": "怀旧游戏在线玩"
+      },
+      {
+        "key": "webgame",
+        "name": "3A大作"
+      },
+      {
+        "key": "mobilegame",
+        "name": "手游资讯"
+      },
+      {
+        "key": "gameNews",
+        "name": "游戏资讯"
+      },
+      {
+        "key": "otherGame",
+        "name": "其他平台"
+      },
+      {
+        "key": "mod",
+        "name": "模组资源"
+      },
+      {
+        "key": "esports",
+        "name": "电竞"
+      },
+      {
+        "key": "console",
+        "name": "主机游戏"
+      },
+      {
+        "key": "steamdb",
+        "name": "价格查询"
+      },
+      {
+        "key": "gamewiki",
+        "name": "游戏维基"
+      }
+    ],
+    "links": [
+      {
+        "sub": "pcgame",
+        "title": "怀旧游戏库",
+        "url": "https://oldgames.space/browse/type/all"
+      },
+      {
+        "sub": "pcgame",
+        "title": "老游戏在线玩",
+        "url": "https://zaixianwan.app/"
+      },
+      {
+        "sub": "pcgame",
+        "title": "WeGame",
+        "url": "https://www.wegame.com.cn/"
+      },
+      {
+        "sub": "webgame",
+        "title": "Switch520",
+        "url": "https://www.switch520.fun/"
+      },
+      {
+        "sub": "webgame",
+        "title": "7k7k游戏",
+        "url": "https://www.7k7k.com/"
+      },
+      {
+        "sub": "mobilegame",
+        "title": "网易游戏",
+        "url": "https://game.163.com/"
+      },
+      {
+        "sub": "mobilegame",
+        "title": "腾讯游戏",
+        "url": "https://game.qq.com/"
+      },
+      {
+        "sub": "gameNews",
+        "title": "游侠网",
+        "url": "https://www.ali213.net/"
+      },
+      {
+        "sub": "gameNews",
+        "title": "游民星空",
+        "url": "https://www.gamersky.com/"
+      },
+      {
+        "sub": "otherGame",
+        "title": "GOG平台",
+        "url": "https://www.gog.com/"
+      },
+      {
+        "sub": "mod",
+        "title": "Nexus模组站",
+        "url": "https://www.nexusmods.com/"
+      },
+      {
+        "sub": "esports",
+        "title": "英雄联盟官网",
+        "url": "https://lol.qq.com/"
+      },
+      {
+        "sub": "console",
+        "title": "Xbox官网",
+        "url": "https://www.xbox.com/"
+      },
+      {
+        "sub": "steamdb",
+        "title": "SteamDB价格查询",
+        "url": "https://steamdb.info/"
+      },
+      {
+        "sub": "gamewiki",
+        "title": "B站游戏维基",
+        "url": "https://wiki.biligame.com/"
+      }
+    ]
+  },
+  "video": {
+    "name": "影视",
+    "children": [
+      {
+        "key": "videoPlatform",
+        "name": "视频平台"
+      },
+      {
+        "key": "live",
+        "name": "直播平台"
+      },
+      {
+        "key": "videoInfo",
+        "name": "影视资讯"
+      },
+      {
+        "key": "anime",
+        "name": "动漫番剧"
+      },
+      {
+        "key": "otherVideo",
+        "name": "海外视频"
+      },
+      {
+        "key": "music",
+        "name": "音乐平台"
+      },
+      {
+        "key": "podcast",
+        "name": "播客电台"
+      },
+      {
+        "key": "cctv",
+        "name": "央视频道"
+      },
+      {
+        "key": "filmreview",
+        "name": "电影资料库"
+      },
+      {
+        "key": "shortvideo",
+        "name": "短视频"
+      }
+    ],
+    "links": [
+      {
+        "sub": "videoPlatform",
+        "title": "爱奇艺",
+        "url": "https://www.iqiyi.com/"
+      },
+      {
+        "sub": "videoPlatform",
+        "title": "腾讯视频",
+        "url": "https://v.qq.com/"
+      },
+      {
+        "sub": "videoPlatform",
+        "title": "优酷",
+        "url": "https://youku.com/"
+      },
+      {
+        "sub": "videoPlatform",
+        "title": "芒果TV",
+        "url": "https://www.mgtv.com/"
+      },
+      {
+        "sub": "live",
+        "title": "虎牙直播",
+        "url": "https://www.huya.com/"
+      },
+      {
+        "sub": "live",
+        "title": "斗鱼直播",
+        "url": "https://www.douyu.com/"
+      },
+      {
+        "sub": "videoInfo",
+        "title": "豆瓣电影",
+        "url": "https://movie.douban.com/"
+      },
+      {
+        "sub": "videoInfo",
+        "title": "哔哩哔哩",
+        "url": "https://www.bilibili.com/"
+      },
+      {
+        "sub": "anime",
+        "title": "Bangumi番组",
+        "url": "https://bangumi.tv/"
+      },
+      {
+        "sub": "otherVideo",
+        "title": "YouTube",
+        "url": "https://www.youtube.com/"
+      },
+      {
+        "sub": "music",
+        "title": "网易云音乐",
+        "url": "https://music.163.com/"
+      },
+      {
+        "sub": "podcast",
+        "title": "喜马拉雅",
+        "url": "https://www.ximalaya.com/"
+      },
+      {
+        "sub": "cctv",
+        "title": "央视网",
+        "url": "https://tv.cctv.com/"
+      },
+      {
+        "sub": "filmreview",
+        "title": "1905电影网",
+        "url": "https://www.1905.com/"
+      },
+      {
+        "sub": "shortvideo",
+        "title": "抖音网页版",
+        "url": "https://www.douyin.com/"
+      }
+    ]
+  },
+  "tool": {
+    "name": "工具",
+    "children": [
+      {
+        "key": "translate",
+        "name": "翻译工具"
+      },
+      {
+        "key": "note",
+        "name": "笔记工具"
+      },
+      {
+        "key": "office",
+        "name": "办公工具"
+      },
+      {
+        "key": "designTool",
+        "name": "设计工具"
+      },
+      {
+        "key": "otherTool",
+        "name": "综合工具"
+      },
+      {
+        "key": "pdf",
+        "name": "PDF处理"
+      },
+      {
+        "key": "ai",
+        "name": "AI工具"
+      },
+      {
+        "key": "image",
+        "name": "图片处理"
+      },
+      {
+        "key": "code",
+        "name": "代码工具"
+      },
+      {
+        "key": "cloud",
+        "name": "云盘存储"
+      }
+    ],
+    "links": [
+      {
+        "sub": "translate",
+        "title": "百度翻译",
+        "url": "https://fanyi.baidu.com/"
+      },
+      {
+        "sub": "translate",
+        "title": "有道词典",
+        "url": "https://dict.youdao.com/"
+      },
+      {
+        "sub": "note",
+        "title": "有道云笔记",
+        "url": "https://note.youdao.com/"
+      },
+      {
+        "sub": "note",
+        "title": "印象笔记",
+        "url": "https://www.yinxiang.com/"
+      },
+      {
+        "sub": "office",
+        "title": "ProcessOn",
+        "url": "https://www.processon.com/"
+      },
+      {
+        "sub": "office",
+        "title": "WPS",
+        "url": "https://www.wps.cn/"
+      },
+      {
+        "sub": "designTool",
+        "title": "Figma",
+        "url": "https://www.figma.com/"
+      },
+      {
+        "sub": "otherTool",
+        "title": "站长工具",
+        "url": "https://tool.chinaz.com/"
+      },
+      {
+        "sub": "pdf",
+        "title": "SmallPDF",
+        "url": "https://smallpdf.com/cn"
+      },
+      {
+        "sub": "ai",
+        "title": "豆包AI",
+        "url": "https://www.doubao.com/"
+      },
+      {
+        "sub": "image",
+        "title": "在线抠图",
+        "url": "https://remove.bg/"
+      },
+      {
+        "sub": "code",
+        "title": "JS在线运行",
+        "url": "https://jsrun.net/"
+      },
+      {
+        "sub": "cloud",
+        "title": "百度网盘",
+        "url": "https://pan.baidu.com/"
+      }
+    ]
+  },
+  "news": {
+    "name": "资讯",
+    "children": [
+      {
+        "key": "hotNews",
+        "name": "热点资讯"
+      },
+      {
+        "key": "techNews",
+        "name": "科技资讯"
+      },
+      {
+        "key": "finance",
+        "name": "财经资讯"
+      },
+      {
+        "key": "sports",
+        "name": "体育资讯"
+      },
+      {
+        "key": "otherNews",
+        "name": "综合新闻"
+      },
+      {
+        "key": "govnews",
+        "name": "政务资讯"
+      },
+      {
+        "key": "huxiu",
+        "name": "行业观察"
+      },
+      {
+        "key": "sspai",
+        "name": "生活资讯"
+      },
+      {
+        "key": "cailian",
+        "name": "快讯资讯"
+      },
+      {
+        "key": "weather",
+        "name": "生活查询"
+      }
+    ],
+    "links": [
+      {
+        "sub": "hotNews",
+        "title": "今日头条",
+        "url": "https://www.toutiao.com/"
+      },
+      {
+        "sub": "hotNews",
+        "title": "腾讯新闻",
+        "url": "https://news.qq.com/"
+      },
+      {
+        "sub": "techNews",
+        "title": "36氪",
+        "url": "https://www.36kr.com/"
+      },
+      {
+        "sub": "techNews",
+        "title": "IT之家",
+        "url": "https://www.ithome.com/"
+      },
+      {
+        "sub": "finance",
+        "title": "雪球",
+        "url": "https://xueqiu.com/"
+      },
+      {
+        "sub": "sports",
+        "title": "新浪体育",
+        "url": "https://sports.sina.com.cn/"
+      },
+      {
+        "sub": "otherNews",
+        "title": "澎湃新闻",
+        "url": "https://www.thepaper.cn/"
+      },
+      {
+        "sub": "govnews",
+        "title": "中国政府网",
+        "url": "https://www.gov.cn/"
+      },
+      {
+        "sub": "huxiu",
+        "title": "虎嗅网",
+        "url": "https://www.huxiu.com/"
+      },
+      {
+        "sub": "sspai",
+        "title": "少数派",
+        "url": "https://sspai.com/"
+      },
+      {
+        "sub": "cailian",
+        "title": "财联社",
+        "url": "https://www.cls.cn/"
+      },
+      {
+        "sub": "weather",
+        "title": "中国天气网",
+        "url": "https://www.weather.com.cn/"
+      }
+    ]
+  },
+  "community": {
+    "name": "社区",
+    "children": [
+      {
+        "key": "social",
+        "name": "社交平台"
+      },
+      {
+        "key": "forum",
+        "name": "兴趣论坛"
+      },
+      {
+        "key": "techComm",
+        "name": "技术社区"
+      },
+      {
+        "key": "job",
+        "name": "求职社区"
+      },
+      {
+        "key": "otherComm",
+        "name": "海外社区"
+      },
+      {
+        "key": "v2ex",
+        "name": "创意社区"
+      },
+      {
+        "key": "juejin",
+        "name": "开发社区"
+      },
+      {
+        "key": "xiaohongshu",
+        "name": "生活社区"
+      },
+      {
+        "key": "acfun",
+        "name": "ACG社区"
+      },
+      {
+        "key": "lofter",
+        "name": "创作社区"
+      }
+    ],
+    "links": [
+      {
+        "sub": "social",
+        "title": "微博",
+        "url": "https://weibo.com/"
+      },
+      {
+        "sub": "social",
+        "title": "知乎",
+        "url": "https://www.zhihu.com/"
+      },
+      {
+        "sub": "forum",
+        "title": "百度贴吧",
+        "url": "https://tieba.baidu.com/"
+      },
+      {
+        "sub": "forum",
+        "title": "豆瓣",
+        "url": "https://www.douban.com/"
+      },
+      {
+        "sub": "techComm",
+        "title": "GitHub",
+        "url": "https://github.com/"
+      },
+      {
+        "sub": "techComm",
+        "title": "CSDN",
+        "url": "https://www.csdn.net/"
+      },
+      {
+        "sub": "job",
+        "title": "智联招聘",
+        "url": "https://www.zhilian.com/"
+      },
+      {
+        "sub": "otherComm",
+        "title": "Reddit",
+        "url": "https://www.reddit.com/"
+      },
+      {
+        "sub": "v2ex",
+        "title": "V2EX",
+        "url": "https://v2ex.com/"
+      },
+      {
+        "sub": "juejin",
+        "title": "稀土掘金",
+        "url": "https://juejin.cn/"
+      },
+      {
+        "sub": "xiaohongshu",
+        "title": "小红书网页版",
+        "url": "https://www.xiaohongshu.com/"
+      },
+      {
+        "sub": "acfun",
+        "title": "AcFun",
+        "url": "https://www.acfun.cn/"
+      },
+      {
+        "sub": "lofter",
+        "title": "LOFTER",
+        "url": "https://www.lofter.com/"
+      }
+    ]
+  },
+  "cat_murtdg11qm9i": {
+    "name": "西河",
+    "children": [
+      {
+        "key": "sub_murtdg11spw3",
+        "name": "高峰"
+      },
+      {
+        "key": "sub_mus64ah28j2z",
+        "name": "唐广告"
+      },
+      {
+        "key": "sub_mus64iw6pvb2",
+        "name": "林妹"
+      }
+    ],
+    "links": [
+      {
+        "sub": "sub_murtdg11spw3",
+        "title": "无雪人",
+        "url": "https://zh.101isfj.ru",
+        "remark": ""
+      }
+    ]
+  },
+  "cat_mus63xjjc92p": {
+    "name": "关键词",
+    "children": [
+      {
+        "key": "sub_mus63xjjiggf",
+        "name": "中国"
+      },
+      {
+        "key": "sub_mus670v38qmu",
+        "name": "欧美"
+      },
+      {
+        "key": "sub_mus674evc2rb",
+        "name": "日本"
+      },
+      {
+        "key": "sub_mus678en29ce",
+        "name": "车牌"
+      }
+    ],
+    "links": [
+      {
+        "sub": "sub_mus63xjjiggf",
+        "title": "玩偶季节",
+        "url": "",
+        "remark": ""
+      },
+      {
+        "sub": "sub_mus63xjjiggf",
+        "title": "七天",
+        "url": "",
+        "remark": ""
+      },
+      {
+        "sub": "sub_mus63xjjiggf",
+        "title": "小宝",
+        "url": "",
+        "remark": ""
+      },
+      {
+        "sub": "sub_mus670v38qmu",
+        "title": "超人",
+        "url": "",
+        "remark": ""
+      },
+      {
+        "sub": "sub_mus670v38qmu",
+        "title": "灭霸",
+        "url": "",
+        "remark": ""
+      },
+      {
+        "sub": "sub_mus670v38qmu",
+        "title": "关头强",
+        "url": "",
+        "remark": ""
+      }
+    ]
+  }
+}
