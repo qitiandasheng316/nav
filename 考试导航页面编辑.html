@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人网址导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", system-ui, sans-serif;
+        }
+        :root {
+            --bg-body: #e9edf2;
+            --bg-card: #ffffff;
+            --bg-tab: #f1f5f9;
+            --bg-tab-active: #bfe0ff;
+            --bg-hover: #d8e9fc;
+            /* ========== 选中高亮统一变量（左右共用一套样式）========== */
+            --active-border: #4096ff;
+            --active-bg: rgba(64, 150, 255, 0.12);
+            --active-shadow: 0 4px 18px rgba(64, 150, 255, 0.15);
+            --bg-link-hover: #f0f6ff;
+            --text-color: #222;
+            --border-color: #eee;
+            --bg-link-card: #ffffff;
+            --border-card: #b8c6d8;
+            --card-shadow: 0 2px 4px rgba(30,60,120,0.10);
+            --input-border: #d0d7e3;
+            --primary: #4096ff;
+            --primary-strong: #1677ff;
+            --danger: #ff4d4f;
+        }
+        body.dark {
+            --bg-body: #1a1d23;
+            --bg-card: #272b33;
+            --bg-tab: #343a46;
+            --bg-tab-active: #254b70;
+            --bg-hover: #35557a;
+            /* 深色模式选中样式 */
+            --active-border: #60a5fa;
+            --active-bg: rgba(96, 165, 250, 0.18);
+            --active-shadow: 0 4px 18px rgba(96, 165, 250, 0.16);
+            --bg-link-hover: #304761;
+            --text-color: #e6e6e6;
+            --border-color: #3a3f48;
+            --bg-link-card: #323a48;
+            --border-card: #5a6680;
+            --card-shadow: 0 2px 4px rgba(0,0,0,0.45);
+            --input-border: #444954;
+            --primary: #60a5fa;
+            --primary-strong: #93c5fd;
+            --danger: #ff4d4f;
+        }
+        body {
+            background-color: var(--bg-body);
+            padding: 20px;
+            transition: background 0.3s;
+        }
+        .nav-wrap {
+            width: 1100px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: background 0.3s;
+        }
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom:12px;
+            flex-wrap: wrap;
+            gap:12px;
+        }
+        .header-right-group{
+            display:flex;
+            gap:10px;
+            align-items:center;
+            flex-wrap: wrap;
+        }
+        .visit-count{
+            font-size:13px;
+            color:var(--text-color);
+            opacity:0.85;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 650px;
+        }
+        #search-input {
+            flex:1;
+            height:36px;
+            padding:0 14px;
+            border:1px solid var(--input-border);
+            border-radius:6px 0 0 6px;
+            font-size:14px;
+            outline: none;
+            background: var(--bg-card);
+            color: var(--text-color);
+        }
+        #search-input:focus{ border-color: var(--primary); }
+        .search-btn {
+            height:36px;
+            width:72px;
+            background:var(--primary);
+            color:#fff;
+            border:none;
+            border-radius:0 6px 6px 0;
+            cursor:pointer;
+            font-size:14px;
+        }
+        .theme-btn, .edit-toggle-btn, .backup-btn {
+            padding:6px 12px;
+            border-radius:6px;
+            border:1px solid var(--input-border);
+            background:var(--bg-tab);
+            color:var(--text-color);
+            cursor:pointer;
+            font-size:13px;
+        }
+        .edit-toggle-btn.editing {
+            background: var(--primary);
+            color:#fff;
+            border-color: var(--primary);
+        }
+        .media-area{ margin:16px 0 20px; }
+        .media-title{ font-size:14px; color:var(--text-color); margin-bottom:10px; opacity:0.85; }
+        .media-grid{
+            display:grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+            gap:12px;
+        }
+        .media-card{
+            border:1px solid var(--border-color);
+            border-radius:8px;
+            overflow:hidden;
+            background:var(--bg-body);
+            transition:0.2s;
+        }
+        .media-card:hover{
+            transform: translateY(-3px);
+            box-shadow:0 4px 12px rgba(0,0,0,0.1);
+        }
+        .media-card img{
+            width:100%; height:120px; object-fit:cover; display:block; cursor:pointer;
+        }
+        .media-card video{ width:100%; height:120px; object-fit:cover; display:block; }
+        .media-desc{
+            padding:6px 8px; font-size:13px; color:var(--text-color);
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        }
+        .img-modal{
+            position:fixed; inset:0; background:rgba(0,0,0,0.85);
+            display:none; align-items:center; justify-content:center;
+            z-index:999; padding:20px;
+        }
+        .img-modal.show{ display:flex; }
+        .img-modal img{ max-width:90%; max-height:90vh; }
+        .top-tabs {
+            display:flex; gap:6px; margin-bottom:24px; flex-wrap: wrap;
+            align-items: center;
+        }
+        .tab-item {
+            padding:8px 22px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:15px;
+            background:var(--bg-tab);
+            color:var(--text-color);
+            transition:0.2s;
+            position: relative;
+        }
+        .tab-item.active { background:var(--bg-tab-active); }
+        .tab-item:hover{ background:var(--bg-hover); }
+        .tab-add-btn {
+            padding:8px 14px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:14px;
+            background:transparent;
+            color:var(--primary);
+            border:1px dashed var(--primary);
+            display:none;
+        }
+        body.editing .tab-add-btn { display:inline-block; }
+        .main-container { display:flex; gap:24px; align-items:flex-start; }
+        .left-sidebar { width:140px; }
+        .sidebar-item {
+            padding:9px 6px;
+            font-size:14.5px;
+            cursor:pointer;
+            border-radius:8px;
+            margin:3px 0;
+            text-align: center;
+            color:var(--text-color);
+            transition:0.25s ease;
+            position: relative;
+            border: 1px solid transparent;
+        }
+        /* ===== 选中的二级菜单 【核心】和右侧卡片一套样式 ===== */
+        .sidebar-item.active{
+            background: var(--active-bg);
+            border: 1px solid var(--active-border);
+            box-shadow: var(--active-shadow);
+        }
+        .sidebar-item:hover{ background:var(--bg-link-hover); }
+        .sidebar-add-btn {
+            padding:9px 6px;
+            font-size:13px;
+            cursor:pointer;
+            border-radius:5px;
+            margin:3px 0;
+            text-align: center;
+            color:var(--primary);
+            border:1px dashed var(--primary);
+            display:none;
+        }
+        body.editing .sidebar-add-btn { display:block; }
+        .right-links { flex:1; min-height: 200px; }
+        .link-group {
+            margin-bottom:12px;
+            display:none;
+            padding:12px;
+            border-radius:8px;
+            /* 默认透明，选中才启用边框底色 */
+            background: transparent;
+            border: 1px solid transparent;
+            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        /* ===== 右侧链接分组选中，和左侧sidebar-item完全相同样式，视觉成对一体 ===== */
+        .link-group.show {
+            display:block;
+            background: var(--active-bg);
+            border-color: var(--active-border);
+            box-shadow: var(--active-shadow);
+        }
+        .link-list { display:block; }
+        .link-list a {
+            display:inline-block;
+            padding:7px 12px;
+            margin:4px;
+            text-decoration:none;
+            color:var(--text-color);
+            font-size:14px;
+            border-radius:6px;
+            background: var(--bg-link-card);
+            border: 1px solid var(--border-card);
+            box-shadow: var(--card-shadow);
+            transition: 0.2s ease;
+            position: relative;
+            user-select: none;
+            vertical-align: top;
+        }
+        .link-list a:hover {
+            background:var(--bg-link-hover);
+            border-color:var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--active-shadow);
+        }
+        .link-title-line {
+            display: block;
+            line-height: 1.3;
+        }
+        .link-remark {
+            display: block;
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 2px;
+            line-height: 1.3;
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .link-card-actions {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            display: none;
+            gap: 10px;
+            z-index: 10;
+        }
+        body.editing .link-card-actions { display:flex; }
+        .link-card-actions button {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: none;
+            font-size:13px;
+            line-height: 1;
+            cursor: pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            padding:0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        .link-card-actions .edit-btn { background: var(--primary); }
+        .link-card-actions .del-btn { background: var(--danger); }
+        .add-link-card {
+            display: none;
+            padding:7px 12px;
+            margin:4px;
+            font-size:14px;
+            border-radius:6px;
+            border:1px dashed var(--primary);
+            color: var(--primary);
+            cursor: pointer;
+            vertical-align: top;
+        }
+        body.editing .add-link-card { display:inline-block; }
+        .link-list a.dragging { opacity: 0.4; border-style: dashed; }
+        .link-list a.drag-over { border-color: var(--primary); border-width: 2px; }
+        .empty-tip{ color:#888; padding:16px; }
+        .modal-mask {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45);
+            display: none;
+            align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .modal-mask.show { display:flex; }
+        .modal-box {
+            background: var(--bg-card);
+            color: var(--text-color);
+            border-radius: 10px;
+            padding: 24px;
+            width: 420px;
+            max-width: 90%;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .modal-box h3 { font-size: 16px; margin-bottom: 16px; }
+        .modal-box .form-row { margin-bottom: 12px; }
+        .modal-box label {
+            display:block; font-size:13px; margin-bottom:4px; opacity:0.8;
+        }
+        .modal-box input {
+            width:100%; height:36px; padding:0 10px;
+            border:1px solid var(--input-border); border-radius:6px;
+            background: var(--bg-body); color: var(--text-color);
+            font-size:14px; outline: none;
+        }
+        .modal-box input:focus { border-color: var(--primary); }
+        .modal-btns {
+            display:flex; justify-content: flex-end; gap:8px; margin-top:18px;
+        }
+        .modal-btns button {
+            padding:7px 16px; border-radius:6px;
+            border:1px solid var(--input-border);
+            background: var(--bg-tab); color: var(--text-color);
+            cursor:pointer; font-size:13px;
+        }
+        .modal-btns .primary-btn {
+            background: var(--primary); color: #fff; border-color: var(--primary);
+        }
+        .item-op-btns {
+            position: absolute; top: -10px; right: -8px;
+            display: none; gap:10px; z-index:10;
+        }
+        body.editing .tab-item:hover .item-op-btns,
+        body.editing .sidebar-item:hover .item-op-btns { display:flex; }
+        .item-op-btns button {
+            width: 20px; height: 20px; border-radius: 50%; border: none;
+            font-size: 11px; line-height:1;
+            cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            color:#fff; padding:0;
+            box-shadow:0 1px 3px rgba(0,0,0,0.15);
+        }
+        .item-op-btns .rename-btn { background: var(--primary); }
+        .item-op-btns .del-btn { background: var(--danger); }
+        .search-result-item{
+            padding:8px 10px;
+            border-radius:6px;
+            border:1px solid var(--border-color);
+            margin-bottom:6px;
+            cursor:pointer;
+        }
+        .search-result-item:hover{
+            background:var(--bg-link-hover);
+        }
+        .search-result-title{
+            font-weight:bold;
+        }
+        .search-result-path{
+            font-size:12px;
+            opacity:0.7;
+        }
+        #importFileInput{
+            display:none;
+        }
+        @media (max-width:1150px) { .nav-wrap{ width:96%; } }
+        @media (max-width:680px) {
+            .main-container{ flex-direction: column; }
+            .left-sidebar{ width:100%; display:flex; flex-wrap:wrap; gap:6px; }
+            .sidebar-item{ width:auto; padding:6px 12px; }
+            .sidebar-add-btn{ width:auto; }
+            .media-grid{ grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); }
+        }
+    </style>
+</head>
+<body>
+<div class="nav-wrap">
+    <div class="header-row">
+        <div class="search-bar">
+            <input id="search-input" placeholder="搜索网址（标题+备注）...">
+            <button class="search-btn" id="search-btn">搜索</button>
+        </div>
+        <div class="header-right-group">
+            <div class="visit-count" id="visitText"></div>
+            <button class="backup-btn" id="exportBtn">导出备份</button>
+            <button class="backup-btn" id="importBtn">导入恢复</button>
+            <button class="edit-toggle-btn" id="editToggle">编辑模式</button>
+            <button class="theme-btn" id="themeToggle">切换深色模式</button>
+            <input type="file" id="importFileInput" accept=".json">
+        </div>
+    </div>
+
+    <div class="media-area">
+        <div class="media-title">📷 素材收藏</div>
+        <div class="media-grid">
+            <div class="media-card">
+                <img loading="lazy" src="https://ts1.tc.mm.bing.net/th/id/OIP-C.s_71tNHa7pyDvr9uxfu-kAHaFj?w=193&h=145&c=8&rs=1&qlt=90&o=6&pid=ImgAns&rm=2" alt="示例图片">
+                <div class="media-desc">大僵尸</div>
+            </div>
+            <div class="media-card">
+                <video controls muted playsinline preload="none">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                </video>
+                <div class="media-desc">短视频示例</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-tabs" id="tabsBox"></div>
+    <div class="main-container">
+        <div class="left-sidebar" id="sidebarBox"></div>
+        <div class="right-links" id="contentBox"></div>
+    </div>
+</div>
+
+<div class="img-modal" id="imgModal">
+    <img id="previewImg" src="">
+</div>
+
+<div class="modal-mask" id="editModal">
+    <div class="modal-box">
+        <h3 id="editModalTitle">编辑网站</h3>
+        <div class="form-row">
+            <label>网站名称</label>
+            <input id="editNameInput" placeholder="例如：百度">
+        </div>
+        <div class="form-row">
+            <label>网站 URL（可选）</label>
+            <input id="editUrlInput" placeholder="例如：https://www.baidu.com">
+        </div>
+        <div class="form-row">
+            <label>备注（可选）</label>
+            <input id="editRemarkInput" placeholder="例如：常用入口 / 需登录 / 内部系统">
+        </div>
+        <div class="modal-btns">
+            <button id="editCancelBtn">取消</button>
+            <button id="editOkBtn" class="primary-btn">保存</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-mask" id="renameModal">
+    <div class="modal-box">
+        <h3 id="renameModalTitle">重命名</h3>
+        <div class="form-row">
+            <label>名称</label>
+            <input id="renameInput" placeholder="请输入名称">
+        </div>
+        <div class="modal-btns">
+            <button id="renameCancelBtn">取消</button>
+            <button id="renameOkBtn" class="primary-btn">保存</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-mask" id="searchResultModal">
+    <div class="modal-box">
+        <h3>🔍 搜索结果</h3>
+        <div id="searchResultList"></div>
+        <div class="modal-btns">
+            <button id="searchResultCloseBtn">关闭</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===================== 默认配置 =====================
+const defaultMenuConfig = {
+    exam: {
+        name:"考试报名",
+        children:[
+            {key:"primary", name:"高中"},
+            {key:"middle", name:"大学"},
+            {key:"university", name:"研究生"},
+            {key:"postgrad", name:"体制内"},
+            {key:"system", name:"提升"},
+            {key:"skill", name:"技能"},
+            {key:"language", name:"语言学习"},
+            {key:"cert", name:"资格考证"},
+            {key:"kaoyantiku", name:"考研题库"},
+            {key:"learnall", name:"综合学习"}
+        ],
+        links:[
+            {sub:"primary", title:"国家中小学智慧教育平台", url:"https://basic.smartedu.cn/"},
+            {sub:"primary", title:"101教育PPT", url:"https://www.101ppt.com/"},
+            {sub:"primary", title:"作业帮", url:"https://www.zuoyebang.com/"},
+            {sub:"primary", title:"学堂在线中小学", url:"https://www.xuetangx.com/"},
+            {sub:"middle", title:"国家中小学智慧教育平台", url:"https://basic.smartedu.cn/"},
+            {sub:"middle", title:"中考网", url:"https://zhongkao.eol.cn/"},
+            {sub:"middle", title:"学科网", url:"https://www.zxxk.com/"},
+            {sub:"middle", title:"51试题网", url:"https://www.51test.net/"},
+            {sub:"university", title:"四六级报名网", url:"https://cet-bm.neea.edu.cn/"},
+            {sub:"university", title:"教资考试网", url:"https://ntce.neea.edu.cn/"},
+            {sub:"university", title:"学信网", url:"https://www.chsi.com.cn/"},
+            {sub:"university", title:"计算机等级考试", url:"https://ncre.neea.edu.cn/"},
+            {sub:"postgrad", title:"研招网", url:"https://yz.chsi.com.cn/"},
+            {sub:"postgrad", title:"考研网", url:"https://kaoyan.eol.cn/"},
+            {sub:"postgrad", title:"中国教育考试网", url:"https://www.neea.edu.cn/"},
+            {sub:"system", title:"中国人事考试网", url:"https://www.cpta.com.cn/"},
+            {sub:"system", title:"公考雷达", url:"https://www.gongkaoleida.com/"},
+            {sub:"system", title:"粉笔公考", url:"https://www.fenbi.com/"},
+            {sub:"system", title:"国聘网", url:"https://www.iguopin.com/"},
+            {sub:"skill", title:"慕课网", url:"https://www.imooc.com/"},
+            {sub:"skill", title:"中国大学MOOC", url:"https://www.icourse163.org/"},
+            {sub:"skill", title:"Oeasy免费教程", url:"https://www.oeasy.org/"},
+            {sub:"skill", title:"我要自学网", url:"https://www.51zxw.net/"},
+            {sub:"language", title:"有道词典", url:"https://dict.youdao.com/"},
+            {sub:"language", title:"必应翻译", url:"https://www.bing.com/translator"},
+            {sub:"language", title:"VOA英语", url:"https://www.51voa.com/"},
+            {sub:"cert", title:"考试酷", url:"https://www.examcoo.com/"},
+            {sub:"cert", title:"233网校", url:"https://www.233.com/"},
+            {sub:"kaoyantiku", title:"考研网", url:"https://www.kaoyan.com/"},
+            {sub:"kaoyantiku", title:"智学网", url:"https://www.zhixue.com/"},
+            {sub:"learnall", title:"共产党员网学习平台", url:"https://www.open.12371.cn/"},
+            {sub:"learnall", title:"学堂在线", url:"https://www.xuetangx.com/"}
+        ]
+    },
+    hot: {
+        name:"最近热点",
+        children:[
+            {key:"hot1", name:"共享文档合集"},
+            {key:"hot2", name:"植物大战僵尸杂交版"},
+            {key:"hot3", name:"拼豆素材"},
+            {key:"hot4", name:"体育赛况"},
+            {key:"hot5", name:"文娱热点"},
+            {key:"hot6", name:"汽车快讯"},
+            {key:"hot7", name:"房产资讯"},
+            {key:"hot8", name:"医疗健康"},
+            {key:"hot9", name:"国际新闻"},
+            {key:"hot10", name:"民生信息"}
+        ],
+        links:[
+            {sub:"hot1", title:"共享文档三", url:"https://tophub.today/"},
+            {sub:"hot2", title:"下载链接", url:"https://www.cls.cn/"},
+            {sub:"hot2", title:"东方财富", url:"https://www.eastmoney.com/"},
+            {sub:"hot3", title:"IT之家", url:"https://www.ithome.com/"},
+            {sub:"hot3", title:"36氪", url:"https://www.36kr.com/"},
+            {sub:"hot4", title:"新浪体育", url:"https://sports.sina.com.cn/"},
+            {sub:"hot4", title:"懂球帝", url:"https://www.dongqiudi.com/"},
+            {sub:"hot5", title:"豆瓣电影", url:"https://movie.douban.com/"},
+            {sub:"hot5", title:"B站资讯", url:"https://www.bilibili.com/news"},
+            {sub:"hot6", title:"汽车之家", url:"https://www.autohome.com.cn/"},
+            {sub:"hot6", title:"易车网", url:"https://www.yiche.com/"},
+            {sub:"hot7", title:"贝壳找房", url:"https://ke.com/"},
+            {sub:"hot7", title:"安居客", url:"https://www.anjuke.com/"},
+            {sub:"hot8", title:"丁香医生", url:"https://dxy.com/"},
+            {sub:"hot8", title:"健康中国", url:"https://www.healthchina.gov.cn/"},
+            {sub:"hot9", title:"环球网", url:"https://www.huanqiu.com/"},
+            {sub:"hot9", title:"澎湃国际", url:"https://www.thepaper.cn/"},
+            {sub:"hot10", title:"中国天气网", url:"https://www.weather.com.cn/"},
+            {sub:"hot10", title:"本地政务通知", url:"https://www.gov.cn/"}
+        ]
+    },
+    game: {
+        name:"游戏",
+        children:[
+            {key:"pcgame", name:"怀旧游戏在线玩"},
+            {key:"webgame", name:"3A大作"},
+            {key:"mobilegame", name:"手游资讯"},
+            {key:"gameNews", name:"游戏资讯"},
+            {key:"otherGame", name:"其他平台"},
+            {key:"mod", name:"模组资源"},
+            {key:"esports", name:"电竞"},
+            {key:"console", name:"主机游戏"},
+            {key:"steamdb", name:"价格查询"},
+            {key:"gamewiki", name:"游戏维基"}
+        ],
+        links:[
+            {sub:"pcgame", title:"怀旧游戏库", url:"https://oldgames.space/browse/type/all"},
+            {sub:"pcgame", title:"老游戏在线玩", url:"https://zaixianwan.app/"},
+            {sub:"pcgame", title:"WeGame", url:"https://www.wegame.com.cn/"},
+            {sub:"webgame", title:"Switch520", url:"https://www.switch520.fun/"},
+            {sub:"webgame", title:"7k7k游戏", url:"https://www.7k7k.com/"},
+            {sub:"mobilegame", title:"网易游戏", url:"https://game.163.com/"},
+            {sub:"mobilegame", title:"腾讯游戏", url:"https://game.qq.com/"},
+            {sub:"gameNews", title:"游侠网", url:"https://www.ali213.net/"},
+            {sub:"gameNews", title:"游民星空", url:"https://www.gamersky.com/"},
+            {sub:"otherGame", title:"GOG平台", url:"https://www.gog.com/"},
+            {sub:"mod", title:"Nexus模组站", url:"https://www.nexusmods.com/"},
+            {sub:"esports", title:"英雄联盟官网", url:"https://lol.qq.com/"},
+            {sub:"console", title:"Xbox官网", url:"https://www.xbox.com/"},
+            {sub:"steamdb", title:"SteamDB价格查询", url:"https://steamdb.info/"},
+            {sub:"gamewiki", title:"B站游戏维基", url:"https://wiki.biligame.com/"}
+        ]
+    },
+    video: {
+        name:"影视",
+        children:[
+            {key:"videoPlatform", name:"视频平台"},
+            {key:"live", name:"直播平台"},
+            {key:"videoInfo", name:"影视资讯"},
+            {key:"anime", name:"动漫番剧"},
+            {key:"otherVideo", name:"海外视频"},
+            {key:"music", name:"音乐平台"},
+            {key:"podcast", name:"播客电台"},
+            {key:"cctv", name:"央视频道"},
+            {key:"filmreview", name:"电影资料库"},
+            {key:"shortvideo", name:"短视频"}
+        ],
+        links:[
+            {sub:"videoPlatform", title:"爱奇艺", url:"https://www.iqiyi.com/"},
+            {sub:"videoPlatform", title:"腾讯视频", url:"https://v.qq.com/"},
+            {sub:"videoPlatform", title:"优酷", url:"https://youku.com/"},
+            {sub:"videoPlatform", title:"芒果TV", url:"https://www.mgtv.com/"},
+            {sub:"live", title:"虎牙直播", url:"https://www.huya.com/"},
+            {sub:"live", title:"斗鱼直播", url:"https://www.douyu.com/"},
+            {sub:"videoInfo", title:"豆瓣电影", url:"https://movie.douban.com/"},
+            {sub:"videoInfo", title:"哔哩哔哩", url:"https://www.bilibili.com/"},
+            {sub:"anime", title:"Bangumi番组", url:"https://bangumi.tv/"},
+            {sub:"otherVideo", title:"YouTube", url:"https://www.youtube.com/"},
+            {sub:"music", title:"网易云音乐", url:"https://music.163.com/"},
+            {sub:"podcast", title:"喜马拉雅", url:"https://www.ximalaya.com/"},
+            {sub:"cctv", title:"央视网", url:"https://tv.cctv.com/"},
+            {sub:"filmreview", title:"1905电影网", url:"https://www.1905.com/"},
+            {sub:"shortvideo", title:"抖音网页版", url:"https://www.douyin.com/"}
+        ]
+    },
+    tool: {
+        name:"工具",
+        children:[
+            {key:"translate", name:"翻译工具"},
+            {key:"note", name:"笔记工具"},
+            {key:"office", name:"办公工具"},
+            {key:"designTool", name:"设计工具"},
+            {key:"otherTool", name:"综合工具"},
+            {key:"pdf", name:"PDF处理"},
+            {key:"ai", name:"AI工具"},
+            {key:"image", name:"图片处理"},
+            {key:"code", name:"代码工具"},
+            {key:"cloud", name:"云盘存储"}
+        ],
+        links:[
+            {sub:"translate", title:"百度翻译", url:"https://fanyi.baidu.com/"},
+            {sub:"translate", title:"有道词典", url:"https://dict.youdao.com/"},
+            {sub:"note", title:"有道云笔记", url:"https://note.youdao.com/"},
+            {sub:"note", title:"印象笔记", url:"https://www.yinxiang.com/"},
+            {sub:"office", title:"ProcessOn", url:"https://www.processon.com/"},
+            {sub:"office", title:"WPS", url:"https://www.wps.cn/"},
+            {sub:"designTool", title:"Figma", url:"https://www.figma.com/"},
+            {sub:"otherTool", title:"站长工具", url:"https://tool.chinaz.com/"},
+            {sub:"pdf", title:"SmallPDF", url:"https://smallpdf.com/cn"},
+            {sub:"ai", title:"豆包AI", url:"https://www.doubao.com/"},
+            {sub:"image", title:"在线抠图", url:"https://remove.bg/"},
+            {sub:"code", title:"JS在线运行", url:"https://jsrun.net/"},
+            {sub:"cloud", title:"百度网盘", url:"https://pan.baidu.com/"}
+        ]
+    },
+    news: {
+        name:"资讯",
+        children:[
+            {key:"hotNews", name:"热点资讯"},
+            {key:"techNews", name:"科技资讯"},
+            {key:"finance", name:"财经资讯"},
+            {key:"sports", name:"体育资讯"},
+            {key:"otherNews", name:"综合新闻"},
+            {key:"govnews", name:"政务资讯"},
+            {key:"huxiu", name:"行业观察"},
+            {key:"sspai", name:"生活资讯"},
+            {key:"cailian", name:"快讯资讯"},
+            {key:"weather", name:"生活查询"}
+        ],
+        links:[
+            {sub:"hotNews", title:"今日头条", url:"https://www.toutiao.com/"},
+            {sub:"hotNews", title:"腾讯新闻", url:"https://news.qq.com/"},
+            {sub:"techNews", title:"36氪", url:"https://www.36kr.com/"},
+            {sub:"techNews", title:"IT之家", url:"https://www.ithome.com/"},
+            {sub:"finance", title:"雪球", url:"https://xueqiu.com/"},
+            {sub:"sports", title:"新浪体育", url:"https://sports.sina.com.cn/"},
+            {sub:"otherNews", title:"澎湃新闻", url:"https://www.thepaper.cn/"},
+            {sub:"govnews", title:"中国政府网", url:"https://www.gov.cn/"},
+            {sub:"huxiu", title:"虎嗅网", url:"https://www.huxiu.com/"},
+            {sub:"sspai", title:"少数派", url:"https://sspai.com/"},
+            {sub:"cailian", title:"财联社", url:"https://www.cls.cn/"},
+            {sub:"weather", title:"中国天气网", url:"https://www.weather.com.cn/"}
+        ]
+    },
+    community: {
+        name:"社区",
+        children:[
+            {key:"social", name:"社交平台"},
+            {key:"forum", name:"兴趣论坛"},
+            {key:"techComm", name:"技术社区"},
+            {key:"job", name:"求职社区"},
+            {key:"otherComm", name:"海外社区"},
+            {key:"v2ex", name:"创意社区"},
+            {key:"juejin", name:"开发社区"},
+            {key:"xiaohongshu", name:"生活社区"},
+            {key:"acfun", name:"ACG社区"},
+            {key:"lofter", name:"创作社区"}
+        ],
+        links:[
+            {sub:"social", title:"微博", url:"https://weibo.com/"},
+            {sub:"social", title:"知乎", url:"https://www.zhihu.com/"},
+            {sub:"forum", title:"百度贴吧", url:"https://tieba.baidu.com/"},
+            {sub:"forum", title:"豆瓣", url:"https://www.douban.com/"},
+            {sub:"techComm", title:"GitHub", url:"https://github.com/"},
+            {sub:"techComm", title:"CSDN", url:"https://www.csdn.net/"},
+            {sub:"job", title:"智联招聘", url:"https://www.zhilian.com/"},
+            {sub:"otherComm", title:"Reddit", url:"https://www.reddit.com/"},
+            {sub:"v2ex", title:"V2EX", url:"https://v2ex.com/"},
+            {sub:"juejin", title:"稀土掘金", url:"https://juejin.cn/"},
+            {sub:"xiaohongshu", title:"小红书网页版", url:"https://www.xiaohongshu.com/"},
+            {sub:"acfun", title:"AcFun", url:"https://www.acfun.cn/"},
+            {sub:"lofter", title:"LOFTER", url:"https://www.lofter.com/"}
+        ]
+    }
+};
+
+// ===================== 全局状态 =====================
+let menuConfig = loadConfig();
+let currentMainKey = Object.keys(menuConfig)[0] || "exam";
+let currentSubKey = "";
+let isEditing = false;
+
+const tabsBox = document.getElementById("tabsBox");
+const sidebarBox = document.getElementById("sidebarBox");
+const contentBox = document.getElementById("contentBox");
+const searchInput = document.getElementById('search-input');
+const searchBtn = document.getElementById('search-btn');
+const themeToggle = document.getElementById('themeToggle');
+const editToggle = document.getElementById('editToggle');
+const visitText = document.getElementById('visitText');
+const imgModal = document.getElementById("imgModal");
+const previewImg = document.getElementById("previewImg");
+const editModal = document.getElementById("editModal");
+const editNameInput = document.getElementById("editNameInput");
+const editUrlInput = document.getElementById("editUrlInput");
+const editRemarkInput = document.getElementById("editRemarkInput");
+const renameModal = document.getElementById("renameModal");
+const renameInput = document.getElementById("renameInput");
+const searchResultModal = document.getElementById("searchResultModal");
+const searchResultList = document.getElementById("searchResultList");
+const searchResultCloseBtn = document.getElementById("searchResultCloseBtn");
+const exportBtn = document.getElementById("exportBtn");
+const importBtn = document.getElementById("importBtn");
+const importFileInput = document.getElementById("importFileInput");
+
+let dragLinkData = null;
+
+// ===================== 数据持久化 =====================
+function isValidConfig(data){
+    if(!data || typeof data !== "object" || Array.isArray(data)) return false;
+    return Object.keys(data).every(function(k){
+        const c = data[k];
+        return c && typeof c === "object" &&
+               typeof c.name === "string" &&
+               Array.isArray(c.children) &&
+               Array.isArray(c.links);
+    });
+}
+function loadConfig() {
+    try {
+        const saved = localStorage.getItem("nav_menu_config_v2");
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            if (isValidConfig(parsed)) return parsed;
+        }
+    } catch(e) {}
+    return JSON.parse(JSON.stringify(defaultMenuConfig));
+}
+function saveConfig() {
+    localStorage.setItem("nav_menu_config_v2", JSON.stringify(menuConfig));
+}
+
+// ========== 导出备份 ==========
+exportBtn.onclick = function(){
+    const jsonStr = JSON.stringify(menuConfig, null, 2);
+    const blob = new Blob([jsonStr], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `网址导航备份_${new Date().toLocaleDateString()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+}
+// ========== 导入恢复 ==========
+importBtn.onclick = function(){
+    importFileInput.click();
+}
+importFileInput.onchange = function(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+        try{
+            const data = JSON.parse(ev.target.result);
+            if(!isValidConfig(data)){
+                alert("备份文件格式不正确：缺少分类、children 或 links 字段，已取消导入！");
+                importFileInput.value = "";
+                return;
+            }
+            if(confirm("确认导入？会覆盖当前全部导航数据！建议先导出备份！")){
+                menuConfig = data;
+                saveConfig();
+                const keys = Object.keys(menuConfig);
+                currentMainKey = keys[0] || null;
+                if(currentMainKey && menuConfig[currentMainKey].children.length>0){
+                    currentSubKey = menuConfig[currentMainKey].children[0].key;
+                }else currentSubKey="";
+                renderAll();
+                alert("导入成功！");
+            }
+        }catch(err){
+            alert("JSON文件解析失败，请检查备份文件！");
+            console.error(err);
+        }
+    }
+    reader.readAsText(file);
+    importFileInput.value = "";
+}
+
+// ===================== 工具函数 =====================
+function genKey(prefix) {
+    return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+}
+function normalizeUrl(url) {
+    url = url.trim();
+    if (!url) return url;
+    if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+    return url;
+}
+function safeHref(url) {
+    // 仅放行 http/https，防止导入数据中混入 javascript: 等危险协议
+    if (!url) return "javascript:void(0);";
+    try {
+        const u = new URL(url, location.href);
+        if (u.protocol === "http:" || u.protocol === "https:") return url;
+    } catch(e) {}
+    return "javascript:void(0);";
+}
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function(m){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+    });
+}
+
+// ===================== 图片预览 =====================
+document.querySelectorAll(".media-card img").forEach(img=>{
+    img.onclick = function(){
+        previewImg.src = this.src;
+        imgModal.classList.add("show");
+    }
+})
+imgModal.onclick = function(){ imgModal.classList.remove("show"); }
+previewImg.onclick = function(e){ e.stopPropagation(); }
+
+// ===================== 访客统计 =====================
+function initVisitStat() {
+    const today = new Date().toLocaleDateString();
+    let stat = JSON.parse(localStorage.getItem("nav_visit_stat") || '{"date":"","count":0}');
+    if(stat.date !== today){
+        stat = {"date": today, "count": 1};
+    }else{
+        stat.count += 1;
+    }
+    localStorage.setItem("nav_visit_stat", JSON.stringify(stat));
+    visitText.innerText = `今日打开次数：${stat.count}`;
+}
+initVisitStat();
+
+// ===================== 主题切换 =====================
+themeToggle.onclick = function(){
+    document.body.classList.toggle('dark');
+    if(document.body.classList.contains('dark')){
+        this.innerText = "切换浅色模式";
+        localStorage.setItem("nav-theme","dark");
+    }else{
+        this.innerText = "切换深色模式";
+        localStorage.setItem("nav-theme","light");
+    }
+}
+if(localStorage.getItem("nav-theme") === "dark"){
+    document.body.classList.add('dark');
+    themeToggle.innerText = "切换浅色模式";
+}
+
+// ===================== 编辑模式开关 =====================
+editToggle.onclick = function(){
+    isEditing = !isEditing;
+    document.body.classList.toggle('editing', isEditing);
+    this.classList.toggle('editing', isEditing);
+    this.innerText = isEditing ? "完成编辑" : "编辑模式";
+    renderAll();
+}
+
+// ===================== 渲染：一级标签 =====================
+function renderTabs(){
+    tabsBox.innerHTML = "";
+    Object.keys(menuConfig).forEach(key=>{
+        const item = document.createElement("div");
+        item.className = "tab-item";
+        if(key === currentMainKey) item.classList.add("active");
+        item.textContent = menuConfig[key].name;
+        item.dataset.main = key;
+
+        if (isEditing) {
+            const ops = document.createElement("span");
+            ops.className = "item-op-btns";
+            ops.innerHTML = `<button class="rename-btn" title="重命名">✎</button>
+                             <button class="del-btn" title="删除">✕</button>`;
+            ops.querySelector(".rename-btn").onclick = (e)=>{
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                openRenameModal("重命名一级分类", menuConfig[key].name, (newName)=>{
+                    menuConfig[key].name = newName;
+                    saveConfig();
+                    renderTabs();
+                    document.title = menuConfig[currentMainKey].name + " | 个人网址导航";
+                });
+            };
+            ops.querySelector(".del-btn").onclick = (e)=>{
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                if (confirm(`确定删除一级分类「${menuConfig[key].name}」及其所有内容吗？`)) {
+                    delete menuConfig[key];
+                    saveConfig();
+                    const keys = Object.keys(menuConfig);
+                    currentMainKey = keys[0] || null;
+                    if (currentMainKey && menuConfig[currentMainKey].children.length > 0) {
+                        currentSubKey = menuConfig[currentMainKey].children[0].key;
+                    } else {
+                        currentSubKey = "";
+                    }
+                    renderAll();
+                }
+            };
+            item.appendChild(ops);
+        }
+
+        item.onclick = ()=> switchMain(key);
+        tabsBox.appendChild(item);
+    });
+
+    if (isEditing) {
+        const addBtn = document.createElement("div");
+        addBtn.className = "tab-add-btn";
+        addBtn.textContent = "+ 新增分类";
+        addBtn.onclick = ()=>{
+            openRenameModal("新增一级分类", "", (newName)=>{
+                const newKey = genKey("cat");
+                menuConfig[newKey] = {
+                    name: newName,
+                    children: [{key: genKey("sub"), name: "默认分组"}],
+                    links: []
+                };
+                saveConfig();
+                switchMain(newKey);
+            });
+        };
+        tabsBox.appendChild(addBtn);
+    }
+}
+
+// ===================== 渲染：侧边栏 =====================
+function renderSidebar(mainKey) {
+    sidebarBox.innerHTML = "";
+    if (!menuConfig[mainKey]) return;
+    const children = menuConfig[mainKey].children;
+    children.forEach(item=>{
+        const div = document.createElement("div");
+        div.className = "sidebar-item";
+        div.textContent = item.name;
+        div.dataset.sub = item.key;
+        if(item.key === currentSubKey) div.classList.add("active");
+
+        if (isEditing) {
+            const ops = document.createElement("span");
+            ops.className = "item-op-btns";
+            ops.innerHTML = `<button class="rename-btn" title="重命名">✎</button>
+                             <button class="del-btn" title="删除">✕</button>`;
+            ops.querySelector(".rename-btn").onclick = (e)=>{
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                openRenameModal("重命名子分类", item.name, (newName)=>{
+                    item.name = newName;
+                    saveConfig();
+                    renderSidebar(mainKey);
+                });
+            };
+            ops.querySelector(".del-btn").onclick = (e)=>{
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                if (confirm(`确定删除子分类「${item.name}」吗？其下链接将一并删除。`)) {
+                    menuConfig[mainKey].children = menuConfig[mainKey].children.filter(c=>c.key!==item.key);
+                    menuConfig[mainKey].links = menuConfig[mainKey].links.filter(l=>l.sub!==item.key);
+                    saveConfig();
+                    if (currentSubKey === item.key) {
+                        currentSubKey = menuConfig[mainKey].children[0]?.key || "";
+                    }
+                    renderSidebar(mainKey);
+                    renderContent(mainKey);
+                    hideAllAndShowOne();
+                }
+            };
+            div.appendChild(ops);
+        }
+
+        div.onclick = ()=> switchSub(item.key);
+        sidebarBox.appendChild(div);
+    });
+
+    if (isEditing) {
+        const addBtn = document.createElement("div");
+        addBtn.className = "sidebar-add-btn";
+        addBtn.textContent = "+ 新增分组";
+        addBtn.onclick = ()=>{
+            openRenameModal("新增子分类", "", (newName)=>{
+                const newKey = genKey("sub");
+                menuConfig[mainKey].children.push({key: newKey, name: newName});
+                saveConfig();
+                renderSidebar(mainKey);
+                switchSub(newKey);
+            });
+        };
+        sidebarBox.appendChild(addBtn);
+    }
+}
+
+// ===================== 渲染：右侧链接 =====================
+function renderContent(mainKey){
+    contentBox.innerHTML = "";
+    if (!menuConfig[mainKey]) return;
+    const data = menuConfig[mainKey];
+    data.children.forEach(child=>{
+        const group = document.createElement("div");
+        group.className = "link-group";
+        group.dataset.sub = child.key;
+
+        const span = document.createElement("span");
+        span.className = "link-list";
+
+        const subLinks = data.links.filter(l=>l.sub === child.key);
+        if(subLinks.length === 0 && !isEditing){
+            const tip = document.createElement("div");
+            tip.className = "empty-tip";
+            tip.textContent = "暂无网站";
+            span.appendChild(tip);
+        } else {
+            subLinks.forEach((link)=>{
+                const a = document.createElement("a");
+                a.dataset.sub = child.key;
+
+                if (link.url) {
+                    a.href = safeHref(link.url);
+                } else {
+                    a.href = "javascript:void(0);";
+                }
+
+                const titleSpan = document.createElement("span");
+                titleSpan.className = "link-title-line";
+                titleSpan.textContent = link.title;
+                a.appendChild(titleSpan);
+
+                if (link.remark && link.remark.trim()) {
+                    const remarkSpan = document.createElement("span");
+                    remarkSpan.className = "link-remark";
+                    remarkSpan.textContent = link.remark;
+                    remarkSpan.title = link.remark;
+                    a.appendChild(remarkSpan);
+                }
+
+                if (!isEditing) {
+                    if (link.url) a.target = "_blank";
+                } else {
+                    a.draggable = true;
+                    a.addEventListener("click", (e)=> e.preventDefault());
+
+                    const ops = document.createElement("span");
+                    ops.className = "link-card-actions";
+                    ops.innerHTML = `<button class="edit-btn" title="编辑">✎</button>
+                                     <button class="del-btn" title="删除">✕</button>`;
+                    ops.querySelector(".edit-btn").onclick = (e)=>{
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        openLinkEditModal(link.title, link.url, link.remark || "", (newTitle, newUrl, newRemark)=>{
+                            link.title = newTitle;
+                            link.url = normalizeUrl(newUrl);
+                            link.remark = newRemark;
+                            saveConfig();
+                            renderContent(mainKey);
+                            hideAllAndShowOne();
+                        });
+                    };
+                    ops.querySelector(".del-btn").onclick = (e)=>{
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        if(confirm(`删除链接【${link.title}】？`)){
+                            const idx = data.links.indexOf(link);
+                            if(idx > -1) data.links.splice(idx,1);
+                            saveConfig();
+                            renderContent(mainKey);
+                            hideAllAndShowOne();
+                        }
+                    };
+                    a.appendChild(ops);
+
+                    //拖拽排序
+                    a.addEventListener('dragstart',(ev)=>{
+                        dragLinkData = link;
+                        a.classList.add("dragging");
+                    })
+                    a.addEventListener('dragend',()=>{
+                        dragLinkData = null;
+                        a.classList.remove("dragging");
+                    })
+                    a.addEventListener('dragover',(ev)=>{
+                        ev.preventDefault();
+                        a.classList.add("drag-over");
+                    })
+                    a.addEventListener('dragleave',()=>{
+                        a.classList.remove("drag-over");
+                    })
+                    a.addEventListener('drop',(ev)=>{
+                        ev.preventDefault();
+                        a.classList.remove("drag-over");
+                        if(!dragLinkData || dragLinkData === link) return;
+                        const fromIndex = data.links.indexOf(dragLinkData);
+                        const toIndex = data.links.indexOf(link);
+                        if(fromIndex > -1 && toIndex > -1){
+                            data.links.splice(fromIndex,1);
+                            data.links.splice(toIndex,0,dragLinkData);
+                            saveConfig();
+                            renderContent(mainKey);
+                            hideAllAndShowOne();
+                        }
+                    })
+                }
+                span.appendChild(a);
+            })
+
+            //编辑模式添加链接按钮
+            if(isEditing){
+                const addCard = document.createElement("span");
+                addCard.className = "add-link-card";
+                addCard.textContent = "+ 添加网站";
+                addCard.onclick = ()=>{
+                    openLinkEditModal("","","",(title,url,remark)=>{
+                        data.links.push({sub:child.key, title, url:normalizeUrl(url), remark});
+                        saveConfig();
+                        renderContent(mainKey);
+                        hideAllAndShowOne();
+                    })
+                }
+                span.appendChild(addCard);
+            }
+        }
+        group.appendChild(span);
+        contentBox.appendChild(group);
+    })
+}
+
+// ===================== 切换一级分类（考试报名 / 资讯） =====================
+function switchMain(mainKey){
+    currentMainKey = mainKey;
+    //选中当前一级的第一个子分组
+    const children = menuConfig[mainKey].children;
+    currentSubKey = children.length ? children[0].key : "";
+    renderAll();
+    document.title = menuConfig[currentMainKey].name + " | 个人网址导航";
+}
+
+// ===================== 切换侧边子分组 =====================
+function switchSub(subKey){
+    currentSubKey = subKey;
+    renderAll();
+}
+
+// ===================== 隐藏所有分组，只显示当前选中sub =====================
+function hideAllAndShowOne(){
+    const groups = document.querySelectorAll(".link-group");
+    groups.forEach(g=>{
+        if(g.dataset.sub === currentSubKey){
+            g.classList.add("show");
+        }else{
+            g.classList.remove("show");
+        }
+    })
+    //侧边栏激活高亮
+    const sideItems = document.querySelectorAll(".sidebar-item");
+    sideItems.forEach(s=>{
+        if(s.dataset.sub === currentSubKey){
+            s.classList.add("active");
+        }else{
+            s.classList.remove("active");
+        }
+    })
+}
+
+// ===================== 整体全部渲染 =====================
+function renderAll(){
+    renderTabs();
+    renderSidebar(currentMainKey);
+    renderContent(currentMainKey);
+    hideAllAndShowOne();
+}
+
+// ===================== 弹窗：重命名 =====================
+function openRenameModal(title, initVal, callback){
+    document.getElementById("renameModalTitle").innerText = title;
+    renameInput.value = initVal;
+    renameModal.classList.add("show");
+    renameInput.focus();
+    const ok = ()=>{
+        const val = renameInput.value.trim();
+        if(!val){ alert("名称不能为空"); return; }
+        renameModal.classList.remove("show");
+        callback(val);
+    }
+    const cancel = ()=>{
+        renameModal.classList.remove("show");
+    }
+    document.getElementById("renameOkBtn").onclick = ok;
+    document.getElementById("renameCancelBtn").onclick = cancel;
+    renameInput.onkeydown = (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); ok(); } };
+}
+
+// ===================== 弹窗：编辑链接 =====================
+function openLinkEditModal(name,url,remark,callback){
+    document.getElementById("editModalTitle").innerText = name?"编辑网站":"新增网站";
+    editNameInput.value = name;
+    editUrlInput.value = url;
+    editRemarkInput.value = remark;
+    editModal.classList.add("show");
+    editNameInput.focus();
+    const ok = ()=>{
+        const t = editNameInput.value.trim();
+        const u = editUrlInput.value.trim();
+        const r = editRemarkInput.value.trim();
+        if(!t){ alert("网站名称不能为空"); return; }
+        editModal.classList.remove("show");
+        callback(t,u,r);
+    }
+    const cancel = ()=>{
+        editModal.classList.remove("show");
+    }
+    document.getElementById("editOkBtn").onclick = ok;
+    document.getElementById("editCancelBtn").onclick = cancel;
+    editNameInput.onkeydown = (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); ok(); } };
+    editUrlInput.onkeydown = (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); ok(); } };
+    editRemarkInput.onkeydown = (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); ok(); } };
+}
+
+// ===================== 搜索功能 =====================
+searchBtn.onclick = doSearch;
+searchInput.onkeydown = (e)=>{
+    if(e.key === 'Enter') doSearch();
+}
+function doSearch(){
+    const kw = searchInput.value.trim().toLowerCase();
+    if(!kw) return;
+    let resultHtml = "";
+    Object.keys(menuConfig).forEach(mainKey=>{
+        const mainItem = menuConfig[mainKey];
+        mainItem.links.forEach(link=>{
+            const matchText = (link.title + " " + (link.remark||"") + " " + (link.url||"")).toLowerCase();
+            if(matchText.includes(kw)){
+                const subItem = mainItem.children.find(s=>s.key === link.sub);
+                resultHtml += `
+                <div class="search-result-item" data-main="${escapeHtml(mainKey)}" data-sub="${escapeHtml(link.sub)}">
+                    <div class="search-result-title">${escapeHtml(link.title)}</div>
+                    <div class="search-result-path">分类：${escapeHtml(mainItem.name)} → ${escapeHtml(subItem?.name||'')}</div>
+                </div>`
+            }
+        })
+    })
+    if(!resultHtml) resultHtml = "<div>未找到匹配网站</div>";
+    searchResultList.innerHTML = resultHtml;
+    searchResultModal.classList.add("show");
+    //点击搜索结果跳转
+    document.querySelectorAll(".search-result-item").forEach(el=>{
+        el.onclick = ()=>{
+            const mKey = el.dataset.main;
+            const sKey = el.dataset.sub;
+            currentMainKey = mKey;
+            currentSubKey = sKey;
+            renderAll();
+            searchResultModal.classList.remove("show");
+        }
+    })
+}
+searchResultCloseBtn.onclick = ()=>{
+    searchResultModal.classList.remove("show");
+}
+searchResultModal.addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove("show");
+});
+
+//页面初始化
+// 修复：首次加载时选中第一个子分组，否则右侧链接区为空白
+if (currentMainKey && menuConfig[currentMainKey].children.length > 0) {
+    currentSubKey = menuConfig[currentMainKey].children[0].key;
+}
+renderAll();
+</script>
+</body>
+</html>
